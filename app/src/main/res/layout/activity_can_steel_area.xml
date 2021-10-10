@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Can_Steel_Area">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="                                        알루미늄 캔인가요?"
+        />
+    <Button
+        android:id="@+id/Btn_Can_Steel_Yes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="예"
+        />
+    <Button
+        android:id="@+id/Btn_Can_Steel_No"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="아니요"
+        />
+</TableLayout>

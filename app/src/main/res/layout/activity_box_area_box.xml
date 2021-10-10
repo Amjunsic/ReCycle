@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Box_Area_box">
+    <TextView
+        android:text="                 (종류: 상자)테이프를 제거하고 박스에 배출해주세요"
+        />
+    <Button
+        android:id="@+id/Restart_From_Box"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="처음으로 돌아가기"
+        />
+</TableLayout>

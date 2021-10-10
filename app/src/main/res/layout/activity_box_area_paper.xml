@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Box_Area_Paper">
+    <TextView
+        android:id="@+id/Paper_Question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="                                               종이 인가요?"
+        />
+    <Button
+        android:id="@+id/Btn_Yes_For_Paper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="예"
+        />
+    <Button
+        android:id="@+id/Btn_No_For_Paper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="아니요"
+        />
+</TableLayout>

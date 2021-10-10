@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.akinator_for_recycle">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Akinator_For_Recycle">
+        <activity
+            android:name=".Styrofoam_Area_Packaging_Material"
+            android:exported="true" />
+        <activity
+            android:name=".Styrofoam_Area_Contained_Food"
+            android:exported="true" />
+        <activity
+            android:name=".Can_Steel_Area_Spray_ButanesGasYes"
+            android:exported="true" />
+        <activity
+            android:name=".Can_Steel_Area_Spray_ButaneGas"
+            android:exported="true" />
+        <activity
+            android:name=".Glass_Area"
+            android:exported="true" />
+        <activity
+            android:name=".PlasticBag_Area"
+            android:exported="true" />
+        <activity
+            android:name=".Can_Steel_Area_Aluminum"
+            android:exported="true" />
+        <activity
+            android:name=".Can_Steel_Area_Aluminum_Not_Contained"
+            android:exported="true" />
+        <activity
+            android:name=".Can_Steel_Area_Aluminum_Contained"
+            android:exported="true" />
+        <activity
+            android:name=".Can_Steel_Area_Aluminum_Foil"
+            android:exported="true" />
+        <activity
+            android:name=".Can_Steel_Area"
+            android:exported="true" />
+        <activity
+            android:name=".No_Result"
+            android:exported="true" />
+        <activity
+            android:name=".Box_Area_Paper_ReceiptLeaflet"
+            android:exported="true" />
+        <activity
+            android:name=".Box_Area_Paper_MilkpackYes"
+            android:exported="true" />
+        <activity
+            android:name=".Box_Area_Paper_Damaged"
+            android:exported="true" />
+        <activity
+            android:name=".General_Waste"
+            android:exported="true" />
+        <activity
+            android:name=".Box_Area_Paper_Milkpack"
+            android:exported="true" />
+        <activity
+            android:name=".Box_Area_Paper_Oil"
+            android:exported="true" />
+        <activity
+            android:name=".Box_Area_Paper"
+            android:exported="true" />
+        <activity
+            android:name=".Box_Area_box"
+            android:exported="true" />
+        <activity
+            android:name=".Styrofoam_Area"
+            android:exported="true" />
+        <activity
+            android:name=".Box_Area"
+            android:exported="true" />
+        <activity
+            android:name=".Plastic_Area"
+            android:exported="true" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

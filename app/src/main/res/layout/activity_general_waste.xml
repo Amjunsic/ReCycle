@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".General_Waste">
+    <TextView
+        android:text="                                    일반 쓰레기에 배출해주세요"
+        />
+    <Button
+        android:id="@+id/Restart_From_General_Waste"
+        android:text="처음으로 돌아가기"
+        />
+
+</TableLayout>

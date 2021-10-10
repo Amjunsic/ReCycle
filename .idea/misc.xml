@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/robot/AndroidStudioProjects/Akinator_For_Recycle/app/src/main/res/layout/activity_box_area.xml" value="0.25" />
+        <entry key="..\:/Users/robot/AndroidStudioProjects/Akinator_For_Recycle/app/src/main/res/layout/activity_box_area_box.xml" value="0.33" />
+        <entry key="..\:/Users/robot/AndroidStudioProjects/Akinator_For_Recycle/app/src/main/res/layout/activity_box_area_paper.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/robot/AndroidStudioProjects/Akinator_For_Recycle/app/src/main/res/layout/activity_box_area_paper_damaged.xml" value="0.3359375" />
+        <entry key="..\:/Users/robot/AndroidStudioProjects/Akinator_For_Recycle/app/src/main/res/layout/activity_box_area_paper_milkpack.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/robot/AndroidStudioProjects/Akinator_For_Recycle/app/src/main/res/layout/activity_box_area_paper_milkpack_yes.xml" value="0.3359375" />
+        <entry key="..\:/Users/robot/AndroidStudioProjects/Akinator_For_Recycle/app/src/main/res/layout/activity_box_area_paper_oil.xml" value="0.33" />
+        <entry key="..\:/Users/robot/AndroidStudioProjects/Akinator_For_Recycle/app/src/main/res/layout/activity_box_area_paper_receipt_leaflet.xml" value="0.3359375" />
+        <entry key="..\:/Users/robot/AndroidStudioProjects/Akinator_For_Recycle/app/src/main/res/layout/activity_can_area_aluminum_spray_butane_gas.xml" value="0.3359375" />
+        <entry key="..\:/Users/robot/AndroidStudioProjects/Akinator_For_Recycle/app/src/main/res/layout/activity_can_steel_area.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/robot/AndroidStudioProjects/Akinator_For_Recycle/app/src/main/res/layout/activity_can_steel_area_aluminum.xml" value="0.17447916666666666" />
+        <entry key="..\:/Users/robot/AndroidStudioProjects/Akinator_For_Recycle/app/src/main/res/layout/activity_can_steel_area_aluminum_contained.xml" value="0.17447916666666666" />
+        <entry key="..\:/Users/robot/AndroidStudioProjects/Akinator_For_Recycle/app/src/main/res/layout/activity_can_steel_area_aluminum_foil.xml" value="0.17447916666666666" />
+        <entry key="..\:/Users/robot/AndroidStudioProjects/Akinator_For_Recycle/app/src/main/res/layout/activity_can_steel_area_aluminum_not_contained.xml" value="0.17447916666666666" />
+        <entry key="..\:/Users/robot/AndroidStudioProjects/Akinator_For_Recycle/app/src/main/res/layout/activity_can_steel_area_spray_butane_gas.xml" value="0.3359375" />
+        <entry key="..\:/Users/robot/AndroidStudioProjects/Akinator_For_Recycle/app/src/main/res/layout/activity_can_steel_area_spray_butanes_gas_yes.xml" value="0.3359375" />
+        <entry key="..\:/Users/robot/AndroidStudioProjects/Akinator_For_Recycle/app/src/main/res/layout/activity_general_waste.xml" value="0.25" />
+        <entry key="..\:/Users/robot/AndroidStudioProjects/Akinator_For_Recycle/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/robot/AndroidStudioProjects/Akinator_For_Recycle/app/src/main/res/layout/activity_no_result.xml" value="0.5" />
+        <entry key="..\:/Users/robot/AndroidStudioProjects/Akinator_For_Recycle/app/src/main/res/layout/activity_plastic_area.xml" value="0.175" />
+        <entry key="..\:/Users/robot/AndroidStudioProjects/Akinator_For_Recycle/app/src/main/res/layout/activity_plastic_bag_area.xml" value="0.3359375" />
+        <entry key="..\:/Users/robot/AndroidStudioProjects/Akinator_For_Recycle/app/src/main/res/layout/activity_styrofoam_area.xml" value="0.17916666666666667" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

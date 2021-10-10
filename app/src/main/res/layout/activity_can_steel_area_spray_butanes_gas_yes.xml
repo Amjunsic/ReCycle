@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Can_Steel_Area_Spray_ButanesGasYes">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="                                구멍을 뚫어 캔에 배출해주세요"
+        />
+    <Button
+        android:id="@+id/Restart_From_Spray_ButaneGas"
+        android:text="처음으로 돌아가기"
+        />
+</TableLayout>

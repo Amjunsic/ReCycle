@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Box_Area_Paper_ReceiptLeaflet">
+    <TextView
+        android:id="@+id/Paper_Question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="                                       영수증이나 전단지인가요?"
+        />
+    <Button
+        android:id="@+id/Btn_Yes_For_PaperReceiptLeaflet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="예"
+        />
+    <Button
+        android:id="@+id/Btn_No_For_PaperReceiptLeaflet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="아니요"
+        />
+</TableLayout>

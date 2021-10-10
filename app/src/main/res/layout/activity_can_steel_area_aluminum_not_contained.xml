@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Can_Steel_Area_Aluminum_Not_Contained">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="                                        캔으로 배출해주세요"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="98dp"
+        />
+    <Button
+        android:id="@+id/Restart_From_Aluminum_Not_Contained"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="처음으로 돌아가기"
+        />
+</TableLayout>

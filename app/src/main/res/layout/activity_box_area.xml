@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Box_Area">
+    <TextView
+        android:id="@+id/Box_Question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="                                      테이프가 부착되어있나요?"
+    />
+    <Button
+        android:id="@+id/Btn_Yes_Box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="예"
+        />
+    <Button
+        android:id="@+id/Btn_No_Box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="아니요"
+        />
+</TableLayout>
