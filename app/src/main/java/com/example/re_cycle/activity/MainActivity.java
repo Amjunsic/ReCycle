@@ -17,7 +17,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends BasicActivity
 {
     private static final String TAG = "MainActivity";
 
@@ -67,15 +67,20 @@ public class MainActivity extends AppCompatActivity
         }
 
         findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
+        findViewById(R.id.floatingActionButton).setOnClickListener(onClickListener);
     }
 
-    View.OnClickListener onClickListener = new View.OnClickListener() {
+    View.OnClickListener onClickListener = new View.OnClickListener()
+    {
         @Override
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.logoutButton:
                     FirebaseAuth.getInstance().signOut();
                     GotoActivity(SignUpActivity.class);
+                    break;
+                case  R.id.floatingActionButton:
+                    GotoActivity(WritePostActivity.class);
                     break;
             }
         }

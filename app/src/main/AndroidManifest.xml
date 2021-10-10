@@ -49,6 +49,9 @@
         <activity android:name=".activity.CameraActivity">
         </activity>
 
+        <activity android:name=".activity.WritePostActivity">
+        </activity>
+
     </application>
 
 </manifest>
