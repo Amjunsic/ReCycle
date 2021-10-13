@@ -4,11 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class PlasticBag_Area extends AppCompatActivity {
+public class Glass_Area_Sustain_Heat extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_plastic_bag_area);
+        setContentView(R.layout.activity_glass_area_sustain_heat);
     }
 }
