@@ -5,22 +5,23 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.InputType;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 
-import com.example.re_cycle.Memberinfo;
 import com.example.re_cycle.R;
 import com.example.re_cycle.Writeinfo;
 import com.google.android.gms.tasks.Continuation;
@@ -33,32 +34,29 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
-import org.w3c.dom.Document;
+import com.pedro.library.AutoPermissions;
+import com.pedro.library.AutoPermissionsListener;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 
-public class WritePostActivity extends BasicActivity
+public class WritePostActivity extends BasicActivity implements AutoPermissionsListener
 {
     private static final String TAG = "WritePostActivity";
 
     private FirebaseUser user;
     private String imagePath;
-    private ImageView image_imageview;
-    private ArrayList<String> pathList = new ArrayList<>();
-    private LinearLayout parent;
-
-    private int pathCount, succesCount;
+    private ImageView imageImageview;
+    private Bitmap bmp;
+    private RelativeLayout loaderLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -66,9 +64,13 @@ public class WritePostActivity extends BasicActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_post);
 
-        parent = findViewById(R.id.contentview);
+        loaderLayout = findViewById(R.id.loaderlayout);
+        imageImageview = findViewById(R.id.imageButton);
+
         findViewById(R.id.editbutton).setOnClickListener(onClickListener);
-        findViewById(R.id.gallayfloatingActionButton).setOnClickListener(onClickListener);
+        findViewById(R.id.imageButton).setOnClickListener(onClickListener);
+        findViewById(R.id.gallertButton).setOnClickListener(onClickListener);
+        findViewById(R.id.cancelText).setOnClickListener(onClickListener);
 
     }
 
@@ -80,18 +82,132 @@ public class WritePostActivity extends BasicActivity
             switch (v.getId())
             {
                 case R.id.editbutton:
-                    storageUpdate();
+                    postUpdate();
                     break;
 
-                case R.id.gallayfloatingActionButton:
-                    Intent intent = new Intent();
-                    intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(intent, 101);
+                case R.id.imageButton:
+                    CardView cardView = findViewById(R.id.buttonsCardView);
+                    AutoPermissions.Companion.loadAllPermissions(WritePostActivity.this,101);//권한 설정
+
+                    if (cardView.getVisibility() == View.VISIBLE)//카드뷰가 안보일때
+                    {
+                        cardView.setVisibility(View.GONE);
+                    }
+                    else//카드뷰가 보일때때
+                    {
+                        cardView.setVisibility(View.VISIBLE);
+                    }
+                    break;
+
+                    case R.id.gallertButton:
+                        Intent intent = new Intent();
+                        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                        intent.setAction(Intent.ACTION_GET_CONTENT);
+                        startActivityForResult(intent, 1);
+                        break;
+
+                case R.id.cancelText:
+                    cardView = findViewById(R.id.buttonsCardView);
+                    cardView.setVisibility(View.GONE);
                     break;
             }
         }
     };
+
+    private void postUpdate()
+    {
+        final String title = ((EditText) findViewById(R.id.title_editTextText)).getText().toString();
+        final String contnts = ((EditText) findViewById(R.id.content_editButton)).getText().toString();
+
+        if (title.length() > 0 && contnts.length() > 0 && imagePath != null)
+        {
+            loaderLayout.setVisibility(View.VISIBLE);
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference storageRef = storage.getReference();
+
+            user = FirebaseAuth.getInstance().getCurrentUser();
+            final StorageReference mountainImagesRef = storageRef.child("post/" + user.getUid() + "/Image."+getMimeType(imagePath));
+
+            if (imagePath == null)
+            {
+                toast("인증할 사진을 넣어주세요.");
+            }
+            else
+            {
+                try
+                {
+                    InputStream stream = new FileInputStream(new File(imagePath));
+                    UploadTask uploadTask = mountainImagesRef.putStream(stream);
+                    uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>()
+                    {
+                        @Override
+                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception
+                        {
+                            if (!task.isSuccessful())
+                            {
+                                throw Objects.requireNonNull(task.getException());
+                            }
+                            return mountainImagesRef.getDownloadUrl();
+                        }
+                    }).addOnCompleteListener(new OnCompleteListener<Uri>()
+                    {
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task)
+                        {
+                            if (task.isSuccessful())
+                            {
+                                Uri downloadUri = task.getResult();
+                                Writeinfo writeinfo = new Writeinfo(title,contnts, user.getUid(),new Date(),downloadUri.toString());
+                                upLoder(writeinfo);
+                            }
+                            else
+                            {
+                                toast(" 게시글 작성에 실패하였습니다.");
+                                Log.e("로그", "실패");
+                            }
+                        }
+                    });
+                }
+                catch (FileNotFoundException e)
+                {
+                    Log.e("로그", "에러: " + e.toString());
+                }
+            }
+
+        }
+        else
+        {
+            toast("인증 게시글을 작성해주세요(사진 포함).");
+        }
+    }
+
+
+    private void upLoder(Writeinfo writeinfo)
+    {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("posts").add(writeinfo)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>()
+                {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference)
+                    {
+                        loaderLayout.setVisibility(View.GONE);
+                        toast("회원정보 등록을 성공하였습니다.");
+                        finish();
+                        GotoActivity(MainActivity.class);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener()
+                {
+                    @Override
+                    public void onFailure(@NonNull Exception e)
+                    {
+                        loaderLayout.setVisibility(View.GONE);
+                        toast("회원정보 등록에 실패하였습니다.");
+                        Log.e(TAG, "Error writing document", e);
+                    }
+                });
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
@@ -99,40 +215,29 @@ public class WritePostActivity extends BasicActivity
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode)
         {
-            case 101://갤러리 선택
+            case 1://갤러리 선택
             {
                 if (resultCode == Activity.RESULT_OK)
                 {
                     try
                     {
-                        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
                         InputStream is = getContentResolver().openInputStream(data.getData());
                         Bitmap bm = BitmapFactory.decodeStream(is);
                         imagePath = getPath(data.getData());
-                        pathList.add(imagePath);
                         is.close();
+                        imageImageview.setImageBitmap(bm);
 
-                        image_imageview = new ImageView(WritePostActivity.this);
-                        image_imageview.setLayoutParams(layoutParams);
-                        image_imageview.setImageBitmap(bm);
-                        parent.addView(image_imageview);
-
-                        EditText editText = new EditText(WritePostActivity.this);
-                        editText.setLayoutParams(layoutParams);
-                        editText.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_CLASS_TEXT);
-                        parent.addView(editText);
-
-                    } catch (FileNotFoundException e)
-                    {
-                        e.printStackTrace();
-                    } catch (IOException e)
+                    }
+                    catch (FileNotFoundException e)
                     {
                         e.printStackTrace();
                     }
-
-
-                } else if (resultCode == RESULT_CANCELED)
+                    catch (IOException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+                else if (resultCode == RESULT_CANCELED)
                 {
                     toast("취소");
                 }
@@ -142,137 +247,126 @@ public class WritePostActivity extends BasicActivity
         }
     }
 
-
-    private void storageUpdate()
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
     {
-        final String title = ((EditText) findViewById(R.id.title_editTextText)).getText().toString();
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        AutoPermissions.Companion.parsePermissions(this,requestCode,permissions,this);
+    }
 
-        if (title.length() > 0 )
+    public static Bitmap rotateBitmap(Bitmap bitmap, int orientation)
+    {
+
+        Matrix matrix = new Matrix();
+        switch (orientation)
         {
-            ArrayList<String> contentList = new ArrayList<>();
-            user = FirebaseAuth.getInstance().getCurrentUser();
-            FirebaseStorage storage = FirebaseStorage.getInstance();
-            StorageReference storageReference = storage.getReference();
-
-            for (int i = 0; i < parent.getChildCount(); i++)
-            {
-                View view = parent.getChildAt(i);
-                if (view instanceof EditText)
-                {
-                    String text = ((EditText) view).getText().toString();
-                    if (text.length() > 0)//추가된 텍스트뷰
-                    {
-                        contentList.add(text);
-                    }
-                    else//추가된 이미지뷰
-                    {
-                        contentList.add(pathList.get(pathCount));
-
-                        final StorageReference mountainImagesRef = storageReference.child("users/" + user.getUid() + "/" + pathCount + ".jpg");
-                        try
-                        {
-                            InputStream stream = new FileInputStream(new File(pathList.get(pathCount)));
-
-                            StorageMetadata metadata = new StorageMetadata.Builder().setCustomMetadata("index", "" + (contentList.size()-1)).build();
-
-                            UploadTask uploadTask = mountainImagesRef.putStream(stream, metadata);
-                            uploadTask.addOnFailureListener(new OnFailureListener()
-                            {
-                                @Override
-                                public void onFailure(@NonNull Exception exception)
-                                {
-                                    // Handle unsuccessful uploads
-                                }
-                            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>()
-                            {
-                                @Override
-                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
-                                {
-                                    final int index = Integer.parseInt(taskSnapshot.getMetadata().getCustomMetadata("index"));
-                                    mountainImagesRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>()
-                                    {
-                                        @Override
-                                        public void onSuccess(Uri uri)
-                                        {
-                                            Log.e("uri", "uri:" + uri);
-                                            contentList.set(index,uri.toString());
-                                            succesCount++;
-                                            if (pathList.size() == succesCount)
-                                            {
-                                                //완료
-                                                Writeinfo writeinfo = new Writeinfo(title, contentList, user.getUid(),new Date());
-                                                storeUploder(writeinfo);
-                                                for (int i=0; i <contentList.size();i++)
-                                                {
-                                                    Log.e("로그","콘텐츠: "+contentList.get(i));
-                                                }
-
-                                            }
-                                        }
-                                    });
-                                }
-                            });
-                        } catch (FileNotFoundException e)
-                        {
-                            Log.e("로그", "에러: " + e.toString());
-                        }
-                        pathCount++;
-                    }
-                }
-            }
-
+            case ExifInterface.ORIENTATION_NORMAL:
+                return bitmap;
+            case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
+                matrix.setScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                matrix.setRotate(180);
+                break;
+            case ExifInterface.ORIENTATION_FLIP_VERTICAL:
+                matrix.setRotate(180);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_TRANSPOSE:
+                matrix.setRotate(90);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                matrix.setRotate(90);
+                break;
+            case ExifInterface.ORIENTATION_TRANSVERSE:
+                matrix.setRotate(-90);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                matrix.setRotate(-90);
+                break;
+            default:
+                return bitmap;
         }
-        else
+        try
         {
-            toast("회원정보를 입력해주세요.");
+            Bitmap bmRotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            bitmap.recycle();
+            return bmRotated;
+        } catch (OutOfMemoryError e)
+        {
+            e.printStackTrace();
+            return null;
         }
     }
 
-        private void storeUploder (Writeinfo writeinfo)
+    public boolean onTouchEvent(MotionEvent event)
+    {
+        CardView cardView = findViewById(R.id.buttonsCardView);
+        switch (event.getAction())
         {
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("posts").add(writeinfo)
-                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>()
-                    {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference)
-                        {
-                            toast("회원정보 등록을 성공하였습니다.");
-                            finish();
-                            GotoActivity(MainActivity.class);
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener()
-                    {
-                        @Override
-                        public void onFailure(@NonNull Exception e)
-                        {
-                            toast("회원정보 등록에 실패하였습니다.");
-                            Log.w(TAG, "Error writing document", e);
-                        }
-                    });
+            case MotionEvent.ACTION_DOWN:
+                //손가락으로 화면을 누르기 시작했을 때 할 일
+                cardView.setVisibility(View.GONE);
+                break;
+            case MotionEvent.ACTION_MOVE:
+                //터치 후 손가락을 움직일 때 할 일
+                break;
+            case MotionEvent.ACTION_UP:
+                //손가락을 화면에서 뗄 때 할 일
+                break;
+            case MotionEvent.ACTION_CANCEL:
+                // 터치가 취소될 때 할 일
+                break;
+            default:
+                break;
         }
+        return true;
+    }
 
-        public String getPath (Uri uri)
-        {
-            String[] projection = {MediaStore.Images.Media.DATA};
-            Cursor cursor = managedQuery(uri, projection, null, null, null);
-            startManagingCursor(cursor);
-            int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            return cursor.getString(columnIndex);
+    public String getPath (Uri uri)
+    {
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        startManagingCursor(cursor);
+        int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(columnIndex);
+    }
+
+    public static String getMimeType(String url)
+    {
+        String type = null;
+        String extension = MimeTypeMap.getFileExtensionFromUrl(url);
+        if (extension != null) {
+            MimeTypeMap mime = MimeTypeMap.getSingleton();
+            type = mime.getMimeTypeFromExtension(extension);
         }
+        return type;
+    }
 
-        private void GotoActivity (Class I)
-        {
-            Intent intent = new Intent(this, I);
-            startActivityForResult(intent, 0);
-        }
+    private void GotoActivity (Class I)
+    {
+        Intent intent = new Intent(this, I);
+        startActivityForResult(intent, 0);
+    }
 
-        private void toast (String text)
-        {
-            Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
-        }
+    private void toast (String text)
+    {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+    }
 
 
+    @Override
+    public void onDenied(int i, String[] strings)
+    {
+
+    }
+
+    @Override
+    public void onGranted(int i, String[] strings)
+    {
+
+    }
 }

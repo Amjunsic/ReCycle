@@ -21,7 +21,6 @@ public class Memberinfo
         this.name = name;
         this.birthday = birthday;
         this.phone = phonenumber;
-        this.photoUrl = photoUrl;
     }
 
     public String getname()

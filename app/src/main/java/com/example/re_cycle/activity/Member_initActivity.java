@@ -21,6 +21,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -66,6 +67,7 @@ public class Member_initActivity extends BasicActivity implements AutoPermission
     private String profilePath;
     private FirebaseUser user;
     private Bitmap bmp;
+    private RelativeLayout loaderLayout;
 
 
     @Override
@@ -74,11 +76,12 @@ public class Member_initActivity extends BasicActivity implements AutoPermission
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_init);
 
+        loaderLayout = findViewById(R.id.loaderlayout);
         profile_imageview = findViewById(R.id.cameraImageView);//사진 이미지뷰 id 찾아오기
         profile_imageview.setOnClickListener(onClickListener);//확인 버튼 id 찾아오기
 
         findViewById(R.id.confirmedButton).setOnClickListener(onClickListener);
-        findViewById(R.id.picture).setOnClickListener(onClickListener);
+        findViewById(R.id.pictureButton).setOnClickListener(onClickListener);
         findViewById(R.id.gallertButton).setOnClickListener(onClickListener);
 
         //ActivityCompat.requestPermissions(Member_initActivity.this ,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
@@ -190,11 +193,12 @@ public class Member_initActivity extends BasicActivity implements AutoPermission
                         profilePath = getPath(data.getData());
                         is.close();
                         profile_imageview.setImageBitmap(bm);
-
-                    } catch (FileNotFoundException e)
+                    }
+                    catch (FileNotFoundException e)
                     {
                         e.printStackTrace();
-                    } catch (IOException e)
+                    }
+                    catch (IOException e)
                     {
                         e.printStackTrace();
                     }
@@ -233,7 +237,7 @@ public class Member_initActivity extends BasicActivity implements AutoPermission
                         cardView.setVisibility(View.VISIBLE);
                     }
                     break;
-                case R.id.picture:
+                case R.id.pictureButton:
                     GotoActivity(CameraActivity.class);
                     break;
                 case R.id.gallertButton:
@@ -277,6 +281,7 @@ public class Member_initActivity extends BasicActivity implements AutoPermission
 
         if (name.length() > 0 && phoneNumber.length() > 9 && birthDay.length() > 5)
         {
+            loaderLayout.setVisibility(View.VISIBLE);
             FirebaseStorage storage = FirebaseStorage.getInstance();
             StorageReference storageRef = storage.getReference();
 
@@ -287,7 +292,8 @@ public class Member_initActivity extends BasicActivity implements AutoPermission
             {
                 Memberinfo memberInfo = new Memberinfo(name, phoneNumber, birthDay);
                 upLoder(memberInfo);
-            } else
+            }
+            else
             {
                 try
                 {
@@ -343,6 +349,7 @@ public class Member_initActivity extends BasicActivity implements AutoPermission
                     @Override
                     public void onSuccess(Void aVoid)
                     {
+                        loaderLayout.setVisibility(View.GONE);
                         toast("회원정보 등록을 성공하였습니다.");
                         finish();
                         GotoActivity(MainActivity.class);
@@ -353,6 +360,7 @@ public class Member_initActivity extends BasicActivity implements AutoPermission
                     @Override
                     public void onFailure(@NonNull Exception e)
                     {
+                        loaderLayout.setVisibility(View.GONE);
                         toast("회원정보 등록에 실패하였습니다.");
                         Log.w(TAG, "Error writing document", e);
                     }

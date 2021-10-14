@@ -1,85 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/gradient">
 
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:fontFamily="casual"
-        android:gravity="center|bottom"
-        android:text="Re-Cycle"
-        android:textColor="#000"
-        android:textSize="30sp"
-        android:textStyle="italic|bold" />
-
     <LinearLayout
-        android:id="@+id/layer"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_gravity="center"
-        android:orientation="vertical"
-        android:padding="50dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/EmailEditText"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="30dp"
-            android:background="#80FFFFFF"
-            android:ems="10"
-            android:fontFamily="@font/spoqahansansneo_medium"
-            android:hint="E-mail"
-            android:inputType="textEmailAddress"
-            android:paddingLeft="10dp" />
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:fontFamily="casual"
+            android:gravity="center|bottom"
+            android:text="Re-Cycle"
+            android:textColor="#000"
+            android:textSize="30sp"
+            android:textStyle="italic|bold" />
 
-        <EditText
-            android:id="@+id/passwordEditText"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
+        <LinearLayout
+            android:id="@+id/layer"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="30dp"
-            android:background="#80FFFFFF"
-            android:ems="10"
-            android:fontFamily="@font/spoqahansansneo_medium"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:paddingLeft="10dp" />
+            android:orientation="vertical"
+            android:padding="50dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp">
 
-        <EditText
-            android:id="@+id/CheckPasswordEditText"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="30dp"
-            android:background="#80FFFFFF"
-            android:ems="10"
-            android:fontFamily="@font/spoqahansansneo_medium"
-            android:hint="CheckPassword"
-            android:inputType="textPassword"
-            android:paddingLeft="10dp" />
+            <EditText
+                android:id="@+id/EmailEditText"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="30dp"
+                android:background="#80FFFFFF"
+                android:ems="10"
+                android:fontFamily="@font/spoqahansansneo_medium"
+                android:hint="E-mail"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="10dp" />
 
-        <Button
-            android:id="@+id/signUpButton"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:background="#80FFFFFF"
-            android:fontFamily="@font/spoqahansansneo_medium"
-            android:text="Sign Up"
-            android:textColor="#000000" />
+            <EditText
+                android:id="@+id/passwordEditText"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="30dp"
+                android:background="#80FFFFFF"
+                android:ems="10"
+                android:fontFamily="@font/spoqahansansneo_medium"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:paddingLeft="10dp" />
+
+            <EditText
+                android:id="@+id/CheckPasswordEditText"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="30dp"
+                android:background="#80FFFFFF"
+                android:ems="10"
+                android:fontFamily="@font/spoqahansansneo_medium"
+                android:hint="CheckPassword"
+                android:inputType="textPassword"
+                android:paddingLeft="10dp" />
+
+            <Button
+                android:id="@+id/signUpButton"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:background="#80FFFFFF"
+                android:fontFamily="@font/spoqahansansneo_medium"
+                android:text="Sign Up"
+                android:textColor="#000000" />
+
+        </LinearLayout>
 
     </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -96,11 +101,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="@font/spoqahansansneo_bold"
-            android:gravity="center"
+            android:gravity="center|bottom"
+            android:layout_margin="50dp"
             android:text="Go to login"
             android:textColor="#000000"
             android:textSize="15sp"
             android:textStyle="bold" />
     </LinearLayout>
 
-</LinearLayout>
+    <include
+        layout="@layout/view_loader"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
+</RelativeLayout>

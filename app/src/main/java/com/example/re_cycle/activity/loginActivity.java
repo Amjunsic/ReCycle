@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.re_cycle.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -74,12 +74,17 @@ public class loginActivity extends BasicActivity
 
         if (email.length() > 0 && password.length() > 0)
         {
+            final RelativeLayout loaderView = findViewById(R.id.loaderlayout);
+            loaderView.setVisibility(View.VISIBLE);
             mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>()
+                    {
                         @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
+                        public void onComplete(@NonNull Task<AuthResult> task)
+                        {
                             if (task.isSuccessful()) //성공 했을 떄의 ui로직
                             {
+                                loaderView.setVisibility(View.GONE);
                                 toast("로그인에 성공했습니다");
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 GotoActivity(MainActivity.class);
@@ -87,6 +92,7 @@ public class loginActivity extends BasicActivity
                             }
                             else//실패 했을 때의 ui로직
                             {
+                                loaderView.setVisibility(View.GONE);
                                 if (task.getException() != null)
                                 {
                                     toast(task.getException().toString());

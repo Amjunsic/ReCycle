@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -77,6 +78,8 @@ public class SignUpActivity extends BasicActivity
         {
             if (password.equals(Checkpassword))
             {
+                final RelativeLayout loaderLayout = findViewById(R.id.loaderlayout);
+                loaderLayout.setVisibility(View.VISIBLE);
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>()
                         {
@@ -85,6 +88,7 @@ public class SignUpActivity extends BasicActivity
                             {
                                 if (task.isSuccessful())//성공 했을 떄의 ui로직
                                 {
+                                    loaderLayout.setVisibility(View.GONE);
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     toast("회원가입에 성공했습니다");
                                     finish();
@@ -94,6 +98,7 @@ public class SignUpActivity extends BasicActivity
                                 {
                                     if (task.getException() != null)
                                     {
+                                        loaderLayout.setVisibility(View.GONE);
                                         toast(task.getException().toString());
                                     }
                                 }
