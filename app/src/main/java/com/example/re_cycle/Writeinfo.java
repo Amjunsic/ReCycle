@@ -13,6 +13,17 @@ public class Writeinfo
     private String  publisher;
     private Date createdAt;
     private String photoUrl;
+    private String id;
+
+    public Writeinfo(String title, String contents, String publisher,Date createdAt, String photoUrl, String id)
+    {
+        this.title = title;
+        this.contents = contents;
+        this.publisher = publisher;
+        this.createdAt = createdAt;
+        this.photoUrl = photoUrl;
+        this.id = id;
+    }
 
     public Writeinfo(String title, String contents, String publisher,Date createdAt, String photoUrl)
     {
@@ -22,15 +33,6 @@ public class Writeinfo
         this.createdAt = createdAt;
         this.photoUrl = photoUrl;
     }
-
-    public Writeinfo(String title, String contents, String publisher,Date createdAt)
-    {
-        this.title = title;
-        this.contents = contents;
-        this.publisher = publisher;
-        this.createdAt = createdAt;
-    }
-
 
     public String getTitle()
     {
@@ -75,6 +77,15 @@ public class Writeinfo
     public void setCreatedAt(Date createdAt)
     {
         this.createdAt = createdAt;
+    }
+
+    public String getId()
+    {
+        return  this.id;
+    }
+    public void setId(String createdAt)
+    {
+        this.id = id;
     }
 
 
