@@ -32,7 +32,6 @@ public class PostAdaper extends RecyclerView.Adapter<PostAdaper.PostViewHolder>
 {
     private ArrayList<Writeinfo> mDataset;
     private Activity activity;
-    private FirebaseFirestore db;
     private OnPostListener onPostListener;
 
     static class PostViewHolder extends RecyclerView.ViewHolder
@@ -47,9 +46,8 @@ public class PostAdaper extends RecyclerView.Adapter<PostAdaper.PostViewHolder>
 
     public PostAdaper(Activity activity, ArrayList<Writeinfo> myDataset)
     {
-        mDataset = myDataset;
+        this.mDataset = myDataset;
         this.activity = activity;
-        db = FirebaseFirestore.getInstance();
     }
 
 

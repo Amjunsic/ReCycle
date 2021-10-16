@@ -225,6 +225,8 @@ public class WritePostActivity extends BasicActivity implements AutoPermissionsL
                         Bitmap bm = BitmapFactory.decodeStream(is);
                         imagePath = getPath(data.getData());
                         is.close();
+                        imageImageview.setAdjustViewBounds(true);
+                        imageImageview.setScaleType(ImageView.ScaleType.FIT_XY);
                         imageImageview.setImageBitmap(bm);
 
                     }
